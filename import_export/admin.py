@@ -246,7 +246,7 @@ class ImportMixin(BaseImportMixin, ImportExportMixinBase):
 
         import_formats = self.get_import_formats()
         form_type = self.get_import_form()
-        form_kwargs = self.get_form_kwargs(form_type, *args, **kwargs)
+        form_kwargs = self.get_form_kwargs(form_type, form=None, import_form=None, *args, **kwargs)
         form = form_type(import_formats,
                          request.POST or None,
                          request.FILES or None,
@@ -294,7 +294,7 @@ class ImportMixin(BaseImportMixin, ImportExportMixinBase):
                     'input_format': form.cleaned_data['input_format'],
                 }
                 confirm_form = self.get_confirm_import_form()
-                initial = self.get_form_kwargs(confirm_form, import_form=form, **initial)
+                initial = self.get_form_kwargs(confirm_form, import_form=form, form=None, **initial)
                 context['confirm_form'] = confirm_form(initial=initial)
         else:
             res_kwargs = self.get_import_resource_kwargs(request, form=form, *args, **kwargs)
